@@ -32,7 +32,7 @@ jobs:
     - name: Test
       run: go test ./...
   
-  code-quality:
+  code-quality: 
     runs-on: ubuntu-latest
 
     steps:
