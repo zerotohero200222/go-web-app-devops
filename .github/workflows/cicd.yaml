@@ -36,13 +36,17 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v4
-
-    - name: Run golangci-lint
-      uses: golangci/golangci-lint-action@v6
-      with:
-        version: v1.56.2
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - name: Setup Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.22'
+      - name: Install golangci-lint
+        run: go install github.com/golangci/golangci-lint/cmd/golangci-lint@latest
+      - name: Run golangci-lint
+        run: golangci-lint run ./...
   
   push:
     runs-on: ubuntu-latest
@@ -92,4 +96,3 @@ jobs:
         git add helm/go-web-app-chart/values.yaml
         git commit -m "Update tag in Helm chart"
         git push
-        
